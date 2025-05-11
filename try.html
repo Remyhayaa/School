@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Slider with Content</title>
+  <!-- Add this inside the <head> tag -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 90vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .overlay-content {
+      position: absolute;
+      text-align: center;
+      z-index: 2;
+      transition: opacity 0.5s ease;
+    }
+
+    .overlay-content h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    .overlay-content h2 {
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+
+    .overlay-content h3 {
+      font-size: 1.5rem;
+      margin: 10px 0;
+    }
+
+    .overlay-content button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #ff4081;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: white;
+      padding: 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 3;
+      user-select: none;
+    }
+
+    .nav-arrow.left {
+      left: 20px;
+    }
+
+    .nav-arrow.right {
+      right: 20px;
+    }
+
+    .dots-container {
+      position: absolute;
+      bottom: 20px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      z-index: 3;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .dot.active {
+      background-color: #fff;
+    }
+
+    .dot:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+    .overlay-content h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #f9f9f9;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.overlay-content h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #f1f1f1;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.overlay-content h3 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #e0e0e0;
+  font-style: italic;
+  font-family: 'Georgia', serif;
+}
+
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .overlay-content h1,
+    .overlay-content h2,
+    .overlay-content h3,
+    .overlay-content button {
+      opacity: 0;
+    }
+
+    .overlay-content.animate h1 {
+      animation: fadeSlideUp 0.6s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .overlay-content.animate h2 {
+      animation: fadeSlideUp 0.6s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .overlay-content.animate h3 {
+      animation: fadeSlideUp 0.6s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .overlay-content.animate button {
+      animation: fadeSlideUp 0.6s ease forwards;
+      animation-delay: 1.1s;
+    }
+    @media (max-width: 1024px) {
+    .overlay-content h1 {
+      font-size: 2.5rem; /* Reduce font size for smaller screens */
+    }
+
+    .overlay-content h2 {
+      font-size: 1.8rem;
+    }
+
+    .overlay-content h3 {
+      font-size: 1.5rem;
+    }
+
+    .overlay-content button {
+      padding: 8px 16px;
+      font-size: 1rem;
+    }
+
+    .nav-arrow {
+      font-size: 1.5rem; /* Smaller arrow size */
+    }
+
+    .dots-container {
+      bottom: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+    }
+    .slider-container {
+      height: 60vh;
+    }
+
+    .nav-arrow.left {
+      left: 5px;
+    }
+
+    .nav-arrow.right {
+      right: 5px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .overlay-content h1 {
+      font-size: 2rem;
+    }
+
+    .overlay-content h2 {
+      font-size: 1.5rem;
+    }
+
+    .overlay-content h3 {
+      font-size: 1.3rem;
+    }
+
+    .overlay-content button {
+      padding: 6px 14px;
+      font-size: 0.9rem;
+    }
+
+    .nav-arrow {
+      font-size: 1.2rem; /* Smaller arrow size */
+    }
+
+    .dots-container {
+      bottom: 5px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+    }
+    .slider-container {
+      height: 45vh;
+    }
+
+    .nav-arrow.left {
+      left: 5px;
+    }
+
+    .nav-arrow.right {
+      right: 5px;
+    }
+  }
+  </style>
+</head>
+<body>
+
+<div class="slider-container">
+  <div class="slide active" style="background-image: url('./imgs/hero-1.jpg');"></div>
+  <div class="slide" style="background-image: url('./imgs/hero-2.jpg');"></div>
+  <div class="slide" style="background-image: url('./imgs/hero-5.jpg');"></div>
+
+  <div class="overlay-content" id="content">
+    <h1 id="title" >Welcome to Nature</h1>
+    <h2 id="subtitle">Feel the freshness</h2>
+    <h3 id="description">Water heals the soul</h3>
+    <button id="action">Explore Water</button>
+  </div>
+
+  <div class="nav-arrow left" onclick="prevSlide()"><i class="fas fa-angle-left"></i></div>
+  <div class="nav-arrow right" onclick="nextSlide()"><i class="fas fa-angle-right"></i></div>
+  
+  <div class="dots-container">
+    <div class="dot active" onclick="showSlide(0)"></div>
+    <div class="dot" onclick="showSlide(1)"></div>
+    <div class="dot" onclick="showSlide(2)"></div>
+  </div>
+  
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const title = document.getElementById('title');
+  const subtitle = document.getElementById('subtitle');
+  const description = document.getElementById('description');
+  const action = document.getElementById('action');
+
+  const contents = [
+  {
+    title: "Welcome to Our School",
+    subtitle: "Inspiring Young Minds",
+    description: "Empowering students to achieve their dreams",
+    button: "Learn More"
+  },
+  {
+    title: "Innovative Learning",
+    subtitle: "Modern Classrooms & Tools",
+    description: "Technology and creativity hand in hand",
+    button: "Explore Curriculum"
+  },
+  {
+    title: "Join Our Community",
+    subtitle: "Where Learning Thrives",
+    description: "Dedicated to academic excellence",
+    button: "Meet the Staff"
+  }
+];
+
+  let current = 0;
+  const total = slides.length;
+
+  function updateContent(index) {
+    title.textContent = contents[index].title;
+    subtitle.textContent = contents[index].subtitle;
+    description.textContent = contents[index].description;
+    action.textContent = contents[index].button;
+  }
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === index) {
+        slide.classList.add('active');
+      }
+    });
+
+    // Update active dot
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, i) => {
+      dot.classList.remove('active');
+      if (i === index) {
+        dot.classList.add('active');
+      }
+    });
+
+    // Animate overlay content
+    const overlay = document.getElementById('content');
+    overlay.classList.remove('animate');
+    void overlay.offsetWidth; // trigger reflow
+    overlay.classList.add('animate');
+
+    updateContent(index);
+  }
+
+  function nextSlide() {
+    current = (current + 1) % total;
+    showSlide(current);
+  }
+
+  function prevSlide() {
+    current = (current - 1 + total) % total;
+    showSlide(current);
+  }
+
+  setInterval(nextSlide, 15000); // Change every 15 seconds
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('content');
+    overlay.classList.remove('animate');
+    void overlay.offsetWidth; // Trigger reflow
+    overlay.classList.add('animate');
+  });
+</script>
+
+</body>
+</html>

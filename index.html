@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wajabu Junior School</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-section">
+          <img src="./imgs/logo.png" alt="Wajabu Junior School Logo" class="logo" />
+        </div>
+        <div class="menu-toggle" id="menuToggle">&#9776;</div>
+        <nav class="nav-links" id="navLinks">
+          <a href="#">Home</a>
+          <a href="#">About Us</a>
+          <a href="#">Why Wajabu</a>
+          <a href="#">Admissions</a>
+          <a href="#">Latest News</a>
+          <a href="#">Contacts</a>
+        </nav>
+      </header>
+      
+      <div class="slider-container">
+        <div class="slide active" style="background-image: url('./imgs/hero-1.jpg');"></div>
+        <div class="slide" style="background-image: url('./imgs/hero-2.jpg');"></div>
+        <div class="slide" style="background-image: url('./imgs/hero-5.jpg');"></div>
+      
+        <div class="overlay-content" id="content">
+          <h1 id="title" >Welcome to Nature</h1>
+          <h2 id="subtitle">Feel the freshness</h2>
+          <h3 id="description">Water heals the soul</h3>
+          <button id="action">Explore Water</button>
+        </div>
+      
+        <div class="nav-arrow left" onclick="prevSlide()"><i class="fas fa-angle-left"></i></div>
+        <div class="nav-arrow right" onclick="nextSlide()"><i class="fas fa-angle-right"></i></div>
+        
+        <div class="dots-container">
+          <div class="dot active" onclick="showSlide(0)"></div>
+          <div class="dot" onclick="showSlide(1)"></div>
+          <div class="dot" onclick="showSlide(2)"></div>
+        </div>
+        
+      </div>
+      
+  <script src="./js/index.js"></script>
+</body>
+</html>
